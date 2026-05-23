@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  const startMessage = "Click here to see the motion baby";
+  const startMessage = "[right-click to unlock my shii]";
   let startTextContent = '';
   let startIndex = 0;
   let startCursorVisible = true;
@@ -106,14 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   function initializeVisitorCounter() {
-    let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '921234', 10);
+    let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '1000000000000', 10);
     totalVisitors += 1;
     localStorage.setItem('totalVisitorCount', totalVisitors);
     visitorCount.textContent = totalVisitors.toLocaleString();
   }
 
   function refreshVisitorCounter() {
-    const totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '921234', 10);
+    const totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '1000000000000', 10);
     visitorCount.textContent = totalVisitors.toLocaleString();
   }
 
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (visitorCounter) {
     visitorCounter.addEventListener('click', () => {
-      let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '921234', 10);
+      let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '1000000000000', 10);
       totalVisitors += 1;
       localStorage.setItem('totalVisitorCount', totalVisitors);
       visitorCount.textContent = totalVisitors.toLocaleString();
