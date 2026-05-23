@@ -2,19 +2,12 @@ let hasUserInteracted = false;
 
 function initMedia() {
   console.log("initMedia called");
-  const backgroundMusic = document.getElementById('background-music');
   const backgroundVideo = document.getElementById('background');
-  if (!backgroundMusic || !backgroundVideo) {
+  if (!backgroundVideo) {
     console.error("Media elements not found");
     return;
   }
-  backgroundMusic.volume = 0.3;
-  backgroundVideo.muted = true; 
-
-  
-  backgroundVideo.play().catch(err => {
-    console.error("Failed to play background video:", err);
-  });
+  backgroundVideo.volume = 0.3;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileName = document.getElementById('profile-name');
   const profileBio = document.getElementById('profile-bio');
   const visitorCount = document.getElementById('visitor-count');
-  const backgroundMusic = document.getElementById('background-music');
   const hackerMusic = document.getElementById('hacker-music');
   const rainMusic = document.getElementById('rain-music');
   const animeMusic = document.getElementById('anime-music');
@@ -33,21 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const rainButton = document.getElementById('rain-theme');
   const animeButton = document.getElementById('anime-theme');
   const carButton = document.getElementById('car-theme');
-  const resultsButtonContainer = document.getElementById('results-button-container');
-  const resultsButton = document.getElementById('results-theme');
+  
   const volumeIcon = document.getElementById('volume-icon');
   const volumeSlider = document.getElementById('volume-slider');
   const transparencySlider = document.getElementById('transparency-slider');
   const backgroundVideo = document.getElementById('background');
-  const hackerOverlay = document.getElementById('hacker-overlay');
-  const snowOverlay = document.getElementById('snow-overlay');
   const glitchOverlay = document.querySelector('.glitch-overlay');
   const profileBlock = document.getElementById('profile-block');
   const skillsBlock = document.getElementById('skills-block');
   const pythonBar = document.getElementById('python-bar');
   const cppBar = document.getElementById('cpp-bar');
   const csharpBar = document.getElementById('csharp-bar');
-  const resultsHint = document.getElementById('results-hint');
   const profilePicture = document.querySelector('.profile-picture');
   const profileContainer = document.querySelector('.profile-container');
   const socialIcons = document.querySelectorAll('.social-icon');
@@ -141,11 +129,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startScreen.addEventListener('click', () => {
     startScreen.classList.add('hidden');
-    backgroundMusic.muted = false;
-    backgroundMusic.play().catch(err => {
-      console.error("Failed to play music after start screen click:", err);
-    });
     profileBlock.classList.remove('hidden');
+    backgroundVideo.muted = false;
+    backgroundVideo.volume = 0.3;
+    backgroundVideo.play().catch(err => {
+      console.error("Failed to play background video after start screen click:", err);
+    });
     gsap.fromTo(profileBlock,
       { opacity: 0, y: -50 },
       { opacity: 1, y: 0, duration: 1, ease: 'power2.out', onComplete: () => {
@@ -172,9 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
   startScreen.addEventListener('touchstart', (e) => {
     e.preventDefault();
     startScreen.classList.add('hidden');
-    backgroundMusic.muted = false;
-    backgroundMusic.play().catch(err => {
-      console.error("Failed to play music after start screen touch:", err);
+    backgroundVideo.muted = false;
+    backgroundVideo.volume = 0.3;
+    backgroundVideo.play().catch(err => {
+      console.error("Failed to play background video after start screen touch:", err);
     });
     profileBlock.classList.remove('hidden');
     gsap.fromTo(profileBlock,
@@ -201,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  const name = "JAQLIV";
+  const name = "sentiensilencx";
   let nameText = '';
   let nameIndex = 0;
   let isNameDeleting = false;
@@ -236,8 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const bioMessages = [
-    "Fu*k Guns.lol & Fakecrime.bio got banned too often, so I created my own.",
-    "\"Hello, World!\""
+    "Open-source profile by sentiensilencx."
   ];
   let bioText = '';
   let bioIndex = 0;
@@ -274,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 500);
 
 
-  let currentAudio = backgroundMusic;
+  let currentAudio = backgroundVideo;
   let isMuted = false;
 
   volumeIcon.addEventListener('click', () => {
@@ -406,11 +395,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (themeClass === 'hacker-theme') {
-          resultsButtonContainer.classList.remove('hidden');
-        } else {
-          resultsButtonContainer.classList.add('hidden');
           skillsBlock.classList.add('hidden');
-          resultsHint.classList.add('hidden');
+          profileBlock.classList.remove('hidden');
+          gsap.to(profileBlock, { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' });
+        } else {
+          skillsBlock.classList.add('hidden');
           profileBlock.classList.remove('hidden');
           gsap.to(profileBlock, { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' });
         }
@@ -431,27 +420,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   homeButton.addEventListener('click', () => {
-    switchTheme('assets/background.mp4', backgroundMusic, 'home-theme');
+    switchTheme('assets/background.mp4', backgroundVideo, 'home-theme');
   });
   homeButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    switchTheme('assets/background.mp4', backgroundMusic, 'home-theme');
+    switchTheme('assets/background.mp4', backgroundVideo, 'home-theme');
   });
 
   hackerButton.addEventListener('click', () => {
-    switchTheme('assets/hacker_background.mp4', hackerMusic, 'hacker-theme', hackerOverlay, false);
+    switchTheme('assets/hacker_background.mp4', hackerMusic, 'hacker-theme', null, false);
   });
   hackerButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    switchTheme('assets/hacker_background.mp4', hackerMusic, 'hacker-theme', hackerOverlay, false);
+    switchTheme('assets/hacker_background.mp4', hackerMusic, 'hacker-theme', null, false);
   });
 
   rainButton.addEventListener('click', () => {
-    switchTheme('assets/rain_background.mov', rainMusic, 'rain-theme', snowOverlay, true);
+    switchTheme('assets/rain_background.mov', rainMusic, 'rain-theme', null, false);
   });
   rainButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    switchTheme('assets/rain_background.mov', rainMusic, 'rain-theme', snowOverlay, true);
+    switchTheme('assets/rain_background.mov', rainMusic, 'rain-theme', null, false);
   });
 
   animeButton.addEventListener('click', () => {
@@ -582,89 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
  
-  let isShowingSkills = false;
-  resultsButton.addEventListener('click', () => {
-    if (!isShowingSkills) {
-      gsap.to(profileBlock, {
-        x: -100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          profileBlock.classList.add('hidden');
-          skillsBlock.classList.remove('hidden');
-          gsap.fromTo(skillsBlock,
-            { x: 100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-          gsap.to(pythonBar, { width: '87%', duration: 2, ease: 'power2.out' });
-          gsap.to(cppBar, { width: '75%', duration: 2, ease: 'power2.out' });
-          gsap.to(csharpBar, { width: '80%', duration: 2, ease: 'power2.out' });
-        }
-      });
-      resultsHint.classList.remove('hidden');
-      isShowingSkills = true;
-    } else {
-      gsap.to(skillsBlock, {
-        x: 100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          skillsBlock.classList.add('hidden');
-          profileBlock.classList.remove('hidden');
-          gsap.fromTo(profileBlock,
-            { x: -100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-        }
-      });
-      resultsHint.classList.add('hidden');
-      isShowingSkills = false;
-    }
-  });
-
-  resultsButton.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    if (!isShowingSkills) {
-      gsap.to(profileBlock, {
-        x: -100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          profileBlock.classList.add('hidden');
-          skillsBlock.classList.remove('hidden');
-          gsap.fromTo(skillsBlock,
-            { x: 100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-          gsap.to(pythonBar, { width: '87%', duration: 2, ease: 'power2.out' });
-          gsap.to(cppBar, { width: '75%', duration: 2, ease: 'power2.out' });
-          gsap.to(csharpBar, { width: '80%', duration: 2, ease: 'power2.out' });
-        }
-      });
-      resultsHint.classList.remove('hidden');
-      isShowingSkills = true;
-    } else {
-      gsap.to(skillsBlock, {
-        x: 100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          skillsBlock.classList.add('hidden');
-          profileBlock.classList.remove('hidden');
-          gsap.fromTo(profileBlock,
-            { x: -100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-        }
-      });
-      resultsHint.classList.add('hidden');
-      isShowingSkills = false;
-    }
-  });
 
 
   typeWriterStart();
