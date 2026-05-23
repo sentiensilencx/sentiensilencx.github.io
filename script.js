@@ -105,15 +105,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 500);
 
 
+  function getVisitorCountValue() {
+    const stored = parseInt(localStorage.getItem('totalVisitorCount'), 10);
+    if (Number.isNaN(stored) || stored < 1000000000000) {
+      return 1000000000000;
+    }
+    return stored;
+  }
+
   function initializeVisitorCounter() {
-    let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '1000000000000', 10);
-    totalVisitors += 1;
+    const totalVisitors = getVisitorCountValue();
     localStorage.setItem('totalVisitorCount', totalVisitors);
     visitorCount.textContent = totalVisitors.toLocaleString();
   }
 
   function refreshVisitorCounter() {
-    const totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '1000000000000', 10);
+    const totalVisitors = getVisitorCountValue();
     visitorCount.textContent = totalVisitors.toLocaleString();
   }
 
@@ -121,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (visitorCounter) {
     visitorCounter.addEventListener('click', () => {
-      let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '1000000000000', 10);
+      let totalVisitors = getVisitorCountValue();
       totalVisitors += 1;
       localStorage.setItem('totalVisitorCount', totalVisitors);
       visitorCount.textContent = totalVisitors.toLocaleString();
