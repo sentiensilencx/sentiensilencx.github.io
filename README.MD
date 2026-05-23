@@ -88,4 +88,4 @@ Place your files into the `assets/` folder with these exact filenames:
 
 
 
-belongs to hazel now >:D
+belongs to hazel now >:D : https://sentiensilencx.github.io/pushover/
