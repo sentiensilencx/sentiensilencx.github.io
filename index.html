@@ -17,7 +17,7 @@
             position: fixed;
             width: 40px;
             height: 40px;
-            background: url('assets/custom_cursor.png') no-repeat center center;
+            background: url('assets/custom_cursor.svg') no-repeat center center;
             background-size: contain;
             pointer-events: none;
             z-index: 9999;
@@ -353,7 +353,7 @@
         }
 
         .visitor-counter {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             background: rgba(255, 255, 255, 0.1);
@@ -364,6 +364,20 @@
             position: relative;
             pointer-events: auto;
             opacity: 1 !important;
+            border: none;
+            cursor: pointer;
+            color: white;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .visitor-counter:hover {
+            background: rgba(255, 255, 255, 0.16);
+            transform: translateY(-1px);
+        }
+
+        .visitor-counter:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.7);
+            outline-offset: 2px;
         }
 
         .visitor-icon {
@@ -412,7 +426,7 @@
             width: 36px;
             height: 36px;
             transition: transform 0.3s ease;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+            filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
             pointer-events: auto;
             opacity: 1 !important;
         }
@@ -798,26 +812,26 @@
             <div class="profile-footer">
 
                 <div class="social-links">
-                    <a href="https://discord.gg/motiongoats" target="_blank">
+                    <a href="https://discord.gg/FYUxQq36nf" target="_blank">
                         <img src="assets/discord.svg" alt="Discord" class="social-icon">
                     </a>
-                    <a href="https://github.com/JAQLIV" target="_blank">
+                    <a href="https://github.com/sentiensilencx" target="_blank">
                         <img src="assets/github.svg" alt="GitHub" class="social-icon">
                     </a>
-                    <a href="https://www.youtube.com/@jaqliv" target="_blank">
+                    <a href="https://www.youtube.com/@ismrgushireal" target="_blank">
                         <img src="assets/youtube.svg" alt="YouTube" class="social-icon">
                     </a>
                 </div>
 
 
-                <div class="visitor-counter">
+                <button id="visitor-counter" class="visitor-counter" type="button">
                     <svg class="visitor-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                     </svg>
                     <span id="visitor-count">21234</span>
                     <span class="tooltip">Profile Views</span>
-                </div>
+                </button>
             </div>
         </div>
 

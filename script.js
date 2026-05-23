@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const profileName = document.getElementById('profile-name');
   const profileBio = document.getElementById('profile-bio');
   const visitorCount = document.getElementById('visitor-count');
+  const visitorCounter = document.getElementById('visitor-counter');
   const hackerMusic = document.getElementById('hacker-music');
   const rainMusic = document.getElementById('rain-music');
   const animeMusic = document.getElementById('anime-music');
@@ -105,26 +106,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   function initializeVisitorCounter() {
-    let totalVisitors = localStorage.getItem('totalVisitorCount');
-    if (!totalVisitors) {
-      totalVisitors = 921234;
-      localStorage.setItem('totalVisitorCount', totalVisitors);
-    } else {
-      totalVisitors = parseInt(totalVisitors);
-    }
-
-    const hasVisited = localStorage.getItem('hasVisited');
-    if (!hasVisited) {
-      totalVisitors++;
-      localStorage.setItem('totalVisitorCount', totalVisitors);
-      localStorage.setItem('hasVisited', 'true');
-    }
-
+    let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '921234', 10);
+    totalVisitors += 1;
+    localStorage.setItem('totalVisitorCount', totalVisitors);
     visitorCount.textContent = totalVisitors.toLocaleString();
   }
 
+  function refreshVisitorCounter() {
+    const totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '921234', 10);
+    visitorCount.textContent = totalVisitors.toLocaleString();
+  }
 
   initializeVisitorCounter();
+
+  if (visitorCounter) {
+    visitorCounter.addEventListener('click', () => {
+      let totalVisitors = parseInt(localStorage.getItem('totalVisitorCount') || '921234', 10);
+      totalVisitors += 1;
+      localStorage.setItem('totalVisitorCount', totalVisitors);
+      visitorCount.textContent = totalVisitors.toLocaleString();
+    });
+  }
 
 
   startScreen.addEventListener('click', () => {
