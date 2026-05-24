@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const bioMessages = [
-    "Open-source profile by sentiensilencx."
+    "welcome to my hyperTree profile! this is where i organize all my profiles :D"
   ];
   let bioText = '';
   let bioIndex = 0;
@@ -546,41 +546,73 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
+  function getProfileRotation() {
+    const rotationValue = gsap.getProperty(profilePicture, 'rotation');
+    const rotation = typeof rotationValue === 'number' ? rotationValue : 0;
+    return ((rotation % 360) + 360) % 360;
+  }
+
+  function animateProfileRotation(targetRotation, duration, ease) {
+    gsap.killTweensOf(profilePicture);
+    gsap.to(profilePicture, {
+      rotation: targetRotation,
+      duration,
+      ease,
+      transformOrigin: '50% 50%'
+    });
+  }
+
+  profilePicture.addEventListener('mouseenter', () => {
+    const currentRotation = getProfileRotation();
+    animateProfileRotation(currentRotation + 360, 1.2, 'power2.out');
+  });
+
+  profilePicture.addEventListener('mouseleave', () => {
+    const currentRotation = getProfileRotation();
+    if (currentRotation > 0) {
+      animateProfileRotation(0, 0.8, 'power2.in');
+    }
+  });
+
+  profilePicture.addEventListener('click', () => {
+    animateProfileRotation('+=360', 1.4, 'power4.out');
+  });
+
+  profilePicture.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    animateProfileRotation('+=360', 1.4, 'power4.out');
+  });
+
+  // Profile picture shuffling on hover
+  let profilePictureShuffleInterval;
+  let profilePictureIndex = 0;
+  // Add your profile picture paths here (replace with actual file names)
+  const profilePictures = [
+    'assets/profile.png',
+    'assets/profile1.png',
+    'assets/profile2.png',
+    'assets/profile3.png',
+  ];
+
   profilePicture.addEventListener('mouseenter', () => {
     glitchOverlay.style.opacity = '1';
     setTimeout(() => {
       glitchOverlay.style.opacity = '0';
     }, 500);
+    
+    // Start shuffling through profile pictures
+    profilePictureShuffleInterval = setInterval(() => {
+      profilePictureIndex = (profilePictureIndex + 1) % profilePictures.length;
+      profilePicture.src = profilePictures[profilePictureIndex];
+    }, 300); // Change image every 300ms
   });
 
-
-  profilePicture.addEventListener('click', () => {
-    profileContainer.classList.remove('fast-orbit');
-    profileContainer.classList.remove('orbit');
-    void profileContainer.offsetWidth;
-    profileContainer.classList.add('fast-orbit');
-    setTimeout(() => {
-      profileContainer.classList.remove('fast-orbit');
-      void profileContainer.offsetWidth;
-      profileContainer.classList.add('orbit');
-    }, 500);
+  profilePicture.addEventListener('mouseleave', () => {
+    // Stop shuffling and reset to first picture
+    clearInterval(profilePictureShuffleInterval);
+    profilePictureIndex = 0;
+    profilePicture.src = profilePictures[0];
   });
-
-  profilePicture.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    profileContainer.classList.remove('fast-orbit');
-    profileContainer.classList.remove('orbit');
-    void profileContainer.offsetWidth;
-    profileContainer.classList.add('fast-orbit');
-    setTimeout(() => {
-      profileContainer.classList.remove('fast-orbit');
-      void profileContainer.offsetWidth;
-      profileContainer.classList.add('orbit');
-    }, 500);
-  });
-
- 
-
 
   typeWriterStart();
 });
